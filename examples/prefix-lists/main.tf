@@ -10,7 +10,7 @@ provider "aws" {
 module "ipv4" {
   source = "../../modules/prefix-list"
   # source  = "tedilabs/ipam/aws//modules/prefix-list"
-  # version = "~> 0.26.0"
+  # version = "~> 0.1.0"
 
   name           = "test-ipv4"
   address_family = "IPv4"
@@ -33,7 +33,7 @@ module "ipv4" {
 module "ipv6" {
   source = "../../modules/prefix-list"
   # source  = "tedilabs/ipam/aws//modules/prefix-list"
-  # version = "~> 0.26.0"
+  # version = "~> 0.1.0"
 
   name           = "test-ipv6"
   address_family = "IPv6"
