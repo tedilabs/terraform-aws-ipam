@@ -8,7 +8,7 @@ output "arn" {
   value       = aws_ec2_managed_prefix_list.this.arn
 }
 
-output "owner_id" {
+output "owner" {
   description = "The ID of the AWS account that owns this prefix list."
   value       = aws_ec2_managed_prefix_list.this.owner_id
 }
