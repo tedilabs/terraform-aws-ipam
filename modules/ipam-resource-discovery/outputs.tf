@@ -40,8 +40,8 @@ output "is_default" {
 
 output "sharing" {
   description = <<EOF
-  The configuration for sharing of the IPAM resource discovery resource discovery.
-    `status` - An indication of whether the IPAM resource discovery resource discovery is shared with other AWS accounts, or was shared with the current account by another AWS account. Sharing is configured through AWS Resource Access Manager (AWS RAM). Values are `NOT_SHARED`, `SHARED_BY_ME` or `SHARED_WITH_ME`.
+  The configuration for sharing of the IPAM resource discovery.
+    `status` - An indication of whether the IPAM resource discovery is shared with other AWS accounts, or was shared with the current account by another AWS account. Sharing is configured through AWS Resource Access Manager (AWS RAM). Values are `NOT_SHARED`, `SHARED_BY_ME` or `SHARED_WITH_ME`.
     `shares` - The list of resource shares via RAM (Resource Access Manager).
   EOF
   value = {
