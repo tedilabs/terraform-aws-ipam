@@ -50,5 +50,8 @@
   description: "This issue or pull request is related to ipam-resource-discovery module."
   name: ":floppy_disk: ipam-resource-discovery"
 - color: "fbca04"
+  description: "This issue or pull request is related to managed-prefix-list module."
+  name: ":floppy_disk: managed-prefix-list"
+- color: "fbca04"
   description: "This issue or pull request is related to prefix-list module."
   name: ":floppy_disk: prefix-list"
