@@ -41,6 +41,9 @@
 
 # Modules
 - color: "fbca04"
+  description: "This issue or pull request is related to elastic-ip module."
+  name: ":floppy_disk: elastic-ip"
+- color: "fbca04"
   description: "This issue or pull request is related to ipam module."
   name: ":floppy_disk: ipam"
 - color: "fbca04"

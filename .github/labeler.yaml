@@ -1,4 +1,7 @@
 # Modules
+":floppy_disk: elastic-ip":
+- modules/elastic-ip/**/*
+
 ":floppy_disk: ipam":
 - modules/ipam/**/*
 
