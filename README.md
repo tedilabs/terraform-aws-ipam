@@ -9,6 +9,7 @@ Terraform module which creates IPAM related resources (IPAM, Elastic IP, Prefix 
 - [elastic-ip](./modules/elastic-ip)
 - [ipam](./modules/ipam)
 - [ipam-resource-discovery](./modules/ipam-resource-discovery)
+- [managed-prefix-list](./modules/managed-prefix-list)
 - [prefix-list](./modules/prefix-list)
 
 
@@ -18,6 +19,7 @@ Terraform Modules from [this package](https://github.com/tedilabs/terraform-aws-
 
 - **AWS VPC (Virtual Private Cloud)**
   - Prefix List
+  - Managed Prefix List
   - Elastic IP
 - **AWS VPC IPAM (IP Address Manager)**
   - IPAM
@@ -31,6 +33,7 @@ Terraform Modules from [this package](https://github.com/tedilabs/terraform-aws-
 ### VPC
 
 - [prefix-lists](./examples/prefix-lists)
+- [managed-prefix-lists](./examples/managed-prefix-lists)
 - [elastic-ip-amazon](./examples/elastic-ip-amazon/)
 
 

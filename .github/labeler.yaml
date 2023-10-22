@@ -8,5 +8,8 @@
 ":floppy_disk: ipam-resource-discovery":
 - modules/ipam-resource-discovery/**/*
 
+":floppy_disk: managed-prefix-list":
+- modules/managed-prefix-list/**/*
+
 ":floppy_disk: prefix-list":
 - modules/prefix-list/**/*
