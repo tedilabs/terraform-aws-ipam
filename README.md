@@ -6,6 +6,7 @@
 
 Terraform module which creates IPAM related resources (IPAM, Elastic IP, Prefix List) on AWS.
 
+- [elastic-ip](./modules/elastic-ip)
 - [ipam](./modules/ipam)
 - [ipam-resource-discovery](./modules/ipam-resource-discovery)
 - [prefix-list](./modules/prefix-list)
@@ -30,6 +31,7 @@ Terraform Modules from [this package](https://github.com/tedilabs/terraform-aws-
 ### VPC
 
 - [prefix-lists](./examples/prefix-lists)
+- [elastic-ip-amazon](./examples/elastic-ip-amazon/)
 
 
 ## Self Promotion
