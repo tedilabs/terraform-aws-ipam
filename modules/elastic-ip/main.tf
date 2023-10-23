@@ -41,6 +41,12 @@ resource "aws_eip" "this" {
     : null
   )
 
+  timeouts {
+    read   = var.timeouts.read
+    update = var.timeouts.update
+    delete = var.timeouts.delete
+  }
+
   tags = merge(
     {
       "Name" = local.metadata.name
