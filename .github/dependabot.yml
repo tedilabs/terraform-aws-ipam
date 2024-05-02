@@ -1,6 +1,16 @@
 version: 2
 updates:
-- package-ecosystem: "github-actions"
-  directory: "/"
+- package-ecosystem: github-actions
+  directory: /
   schedule:
-    interval: "daily"
+    interval: daily
+
+- package-ecosystem: terraform
+  directories:
+  - /modules/elastic-ip
+  - /modules/ipam
+  - /modules/ipam-resource-discovery
+  - /modules/managed-prefix-list
+  - /modules/prefix-list
+  schedule:
+    interval: weekly
