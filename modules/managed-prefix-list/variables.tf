@@ -4,8 +4,8 @@ variable "service" {
   nullable    = false
 
   validation {
-    condition     = contains(["cloudfront.origin-facing", "dynamodb", "groundstation", "route53-healthchecks", "s3", "vpc-lattice"], var.service)
-    error_message = "Valid values for `service` are `cloudfront.origin-facing`, `dynamodb`, `groundstation`, `route53-healthchecks`, `s3`, `vpc-lattice`."
+    condition     = contains(["cloudfront.origin-facing", "dynamodb", "groundstation", "route53-healthchecks", "s3", "s3express", "vpc-lattice"], var.service)
+    error_message = "Valid values for `service` are `cloudfront.origin-facing`, `dynamodb`, `groundstation`, `route53-healthchecks`, `s3`, `s3express`, `vpc-lattice`."
   }
 }
 
