@@ -1,5 +1,5 @@
 variable "service" {
-  description = "(Required) The name of the prefix list. The name must not start with `com.amazonaws`."
+  description = "(Required) The service name of the prefix list. The service name must not start with `com.amazonaws`."
   type        = string
   nullable    = false
 

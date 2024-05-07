@@ -18,6 +18,16 @@ output "name" {
   value       = data.aws_ec2_managed_prefix_list.this.name
 }
 
+output "service" {
+  description = "The service name of the prefix list."
+  value       = var.service
+}
+
+output "is_global" {
+  description = "Whether this is a global prefix list."
+  value       = var.is_global
+}
+
 output "address_family" {
   description = "The address family of the prefix list."
   value       = data.aws_ec2_managed_prefix_list.this.address_family
