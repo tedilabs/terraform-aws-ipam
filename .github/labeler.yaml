@@ -1,15 +1,25 @@
 # Modules
 ":floppy_disk: elastic-ip":
-- modules/elastic-ip/**/*
+- changed-files:
+  - any-glob-to-any-file:
+    - modules/elastic-ip/**/*
 
 ":floppy_disk: ipam":
-- modules/ipam/**/*
+- changed-files:
+  - any-glob-to-any-file:
+    - modules/ipam/**/*
 
 ":floppy_disk: ipam-resource-discovery":
-- modules/ipam-resource-discovery/**/*
+- changed-files:
+  - any-glob-to-any-file:
+    - modules/ipam-resource-discovery/**/*
 
 ":floppy_disk: managed-prefix-list":
-- modules/managed-prefix-list/**/*
+- changed-files:
+  - any-glob-to-any-file:
+    - modules/managed-prefix-list/**/*
 
 ":floppy_disk: prefix-list":
-- modules/prefix-list/**/*
+- changed-files:
+  - any-glob-to-any-file:
+    - modules/prefix-list/**/*
