@@ -7,10 +7,6 @@ updates:
 
 - package-ecosystem: terraform
   directories:
-  - /modules/elastic-ip
-  - /modules/ipam
-  - /modules/ipam-resource-discovery
-  - /modules/managed-prefix-list
-  - /modules/prefix-list
+  - /modules/*
   schedule:
     interval: weekly
