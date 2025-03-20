@@ -6,7 +6,7 @@ This module creates following resources.
 - `aws_vpc_ipam_scope` (optional)
 - `aws_vpc_ipam_resource_discovery_association` (optional)
 
-<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- BEGIN_TF_DOCS -->
 ## Requirements
 
 | Name | Version |
@@ -66,4 +66,4 @@ This module creates following resources.
 | <a name="output_name"></a> [name](#output\_name) | The name of the IPAM. |
 | <a name="output_operating_regions"></a> [operating\_regions](#output\_operating\_regions) | A set of operating regions for the IPAM. |
 | <a name="output_scope_count"></a> [scope\_count](#output\_scope\_count) | The number of scopes in the IPAM. |
-<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- END_TF_DOCS -->

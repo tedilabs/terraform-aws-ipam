@@ -4,7 +4,7 @@ This module creates following resources.
 
 - `aws_eip`
 
-<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- BEGIN_TF_DOCS -->
 ## Requirements
 
 | Name | Version |
@@ -56,4 +56,4 @@ This module creates following resources.
 | <a name="output_public_ip"></a> [public\_ip](#output\_public\_ip) | The Elastic IP address. |
 | <a name="output_scope"></a> [scope](#output\_scope) | The scope of the Elastic IP address. |
 | <a name="output_type"></a> [type](#output\_type) | The type of the Elastic IP address. |
-<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- END_TF_DOCS -->

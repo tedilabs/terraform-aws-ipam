@@ -5,7 +5,7 @@ This module creates following resources.
 - `aws_ec2_managed_prefix_list`
 - `aws_ec2_managed_prefix_list_entry` (optional)
 
-<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- BEGIN_TF_DOCS -->
 ## Requirements
 
 | Name | Version |
@@ -60,4 +60,4 @@ This module creates following resources.
 | <a name="output_owner"></a> [owner](#output\_owner) | The ID of the AWS account that owns this prefix list. |
 | <a name="output_sharing"></a> [sharing](#output\_sharing) | The configuration for sharing of the VPC prefix list.<br>    `status` - An indication of whether the VPC prefix list is shared with other AWS accounts, or was shared with the current account by another AWS account. Sharing is configured through AWS Resource Access Manager (AWS RAM). Values are `NOT_SHARED`, `SHARED_BY_ME` or `SHARED_WITH_ME`.<br>    `shares` - The list of resource shares via RAM (Resource Access Manager). |
 | <a name="output_version"></a> [version](#output\_version) | Latest version of this prefix list. |
-<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- END_TF_DOCS -->

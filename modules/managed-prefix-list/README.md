@@ -2,7 +2,7 @@
 
 This module creates no resources.
 
-<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- BEGIN_TF_DOCS -->
 ## Requirements
 
 | Name | Version |
@@ -47,4 +47,4 @@ No modules.
 | <a name="output_name"></a> [name](#output\_name) | The name of the prefix list. |
 | <a name="output_owner"></a> [owner](#output\_owner) | The ID of the AWS account that owns this prefix list. |
 | <a name="output_version"></a> [version](#output\_version) | Latest version of this prefix list. |
-<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- END_TF_DOCS -->
