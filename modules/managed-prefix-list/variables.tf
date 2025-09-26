@@ -1,28 +1,47 @@
-variable "service" {
-  description = "(Required) The service name of the prefix list. The service name must not start with `com.amazonaws`."
+variable "region" {
+  description = "(Optional) The region in which to create the module resources. If not provided, the module resources will be created in the provider's configured region."
   type        = string
-  nullable    = false
-
-  validation {
-    condition     = contains(["cloudfront.origin-facing", "dynamodb", "groundstation", "route53-healthchecks", "s3", "s3express", "vpc-lattice"], var.service)
-    error_message = "Valid values for `service` are `cloudfront.origin-facing`, `dynamodb`, `groundstation`, `route53-healthchecks`, `s3`, `s3express`, `vpc-lattice`."
-  }
+  default     = null
+  nullable    = true
 }
 
-variable "is_global" {
-  description = "(Optional) Whether this is a global prefix list. Default is `false`."
+variable "name" {
+  description = "(Required) The name of the managed prefix list."
+  type        = string
+  nullable    = false
+}
+
+variable "tags" {
+  description = "(Optional) A map of tags to add to all resources."
+  type        = map(string)
+  default     = {}
+  nullable    = false
+}
+
+variable "module_tags_enabled" {
+  description = "(Optional) Whether to create AWS Resource Tags for the module informations."
   type        = bool
-  default     = false
+  default     = true
   nullable    = false
 }
 
-variable "address_family" {
-  description = "(Required) Address family of the managed prefix list. Valid values are `IPv4` or `IPv6`."
-  type        = string
-  nullable    = false
 
-  validation {
-    condition     = contains(["IPv4", "IPv6"], var.address_family)
-    error_message = "Valid values for `address_family` are `IPv4` or `IPv6`."
-  }
+###################################################
+# Resource Group
+###################################################
+
+variable "resource_group" {
+  description = <<EOF
+  (Optional) A configurations of Resource Group for this module. `resource_group` as defined below.
+    (Optional) `enabled` - Whether to create Resource Group to find and group AWS resources which are created by this module. Defaults to `true`.
+    (Optional) `name` - The name of Resource Group. A Resource Group name can have a maximum of 127 characters, including letters, numbers, hyphens, dots, and underscores. The name cannot start with `AWS` or `aws`. If not provided, a name will be generated using the module name and instance name.
+    (Optional) `description` - The description of Resource Group. Defaults to `Managed by Terraform.`.
+  EOF
+  type = object({
+    enabled     = optional(bool, true)
+    name        = optional(string, "")
+    description = optional(string, "Managed by Terraform.")
+  })
+  default  = {}
+  nullable = false
 }

@@ -3,7 +3,7 @@ locals {
     package = "terraform-aws-ipam"
     version = trimspace(file("${path.module}/../../VERSION"))
     module  = basename(path.module)
-    name    = "${var.service}/${var.address_family}"
+    name    = var.name
   }
   module_tags = {
     "module.terraform.io/package"   = local.metadata.package
@@ -14,17 +14,8 @@ locals {
   }
 }
 
-data "aws_region" "this" {}
-
-locals {
-  region = data.aws_region.this.name
-  prefix_list_name = join(".", compact([
-    "com",
-    "amazonaws",
-    var.is_global ? "global" : local.region,
-    var.address_family == "IPv6" ? "ipv6" : "",
-    var.service
-  ]))
+data "aws_region" "this" {
+  region = var.region
 }
 
 
@@ -33,5 +24,23 @@ locals {
 ###################################################
 
 data "aws_ec2_managed_prefix_list" "this" {
-  name = local.prefix_list_name
+  region = var.region
+
+  name = var.name
+}
+
+resource "aws_ec2_tag" "this" {
+  for_each = merge(
+    {
+      "Name" = local.metadata.name
+    },
+    local.module_tags,
+    var.tags,
+  )
+
+  region = var.region
+
+  resource_id = data.aws_ec2_managed_prefix_list.this.id
+  key         = each.key
+  value       = each.value
 }

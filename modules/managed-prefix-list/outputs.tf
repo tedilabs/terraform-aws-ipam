@@ -1,3 +1,8 @@
+output "region" {
+  description = "The AWS region this module resources resides in."
+  value       = data.aws_ec2_managed_prefix_list.this.region
+}
+
 output "id" {
   description = "The ID of the prefix list."
   value       = data.aws_ec2_managed_prefix_list.this.id
@@ -18,16 +23,6 @@ output "name" {
   value       = data.aws_ec2_managed_prefix_list.this.name
 }
 
-output "service" {
-  description = "The service name of the prefix list."
-  value       = var.service
-}
-
-output "is_global" {
-  description = "Whether this is a global prefix list."
-  value       = var.is_global
-}
-
 output "address_family" {
   description = "The address family of the prefix list."
   value       = data.aws_ec2_managed_prefix_list.this.address_family
@@ -46,4 +41,20 @@ output "max_entries" {
 output "entries" {
   description = "A set of prefix list entries."
   value       = data.aws_ec2_managed_prefix_list.this.entries
+}
+
+output "resource_group" {
+  description = "The resource group created to manage resources in this module."
+  value = merge(
+    {
+      enabled = var.resource_group.enabled && var.module_tags_enabled
+    },
+    (var.resource_group.enabled && var.module_tags_enabled
+      ? {
+        arn  = module.resource_group[0].arn
+        name = module.resource_group[0].name
+      }
+      : {}
+    )
+  )
 }
