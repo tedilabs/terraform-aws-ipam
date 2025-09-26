@@ -26,12 +26,14 @@ locals {
 # INFO: Not support `aws_ec2_managed_prefix_list_entry`
 # To improved execution times on larger updates, if you plan to create a prefix list with more than 100 entries, it is recommended that you use the inline entry block as part of the Managed Prefix List resource resource instead.
 resource "aws_ec2_managed_prefix_list" "this" {
+  region = var.region
+
   name           = var.name
   address_family = var.address_family
   max_entries    = local.max_entries
 
   dynamic "entry" {
-    for_each = var.entries
+    for_each = var.exclusive_entry_management_enabled ? var.entries : []
 
     content {
       cidr        = entry.value.cidr
@@ -46,4 +48,23 @@ resource "aws_ec2_managed_prefix_list" "this" {
     local.module_tags,
     var.tags,
   )
+}
+
+
+###################################################
+# Entries of Prefix List
+###################################################
+
+resource "aws_ec2_managed_prefix_list_entry" "this" {
+  for_each = {
+    for entry in(var.exclusive_entry_management_enabled ? [] : var.entries) :
+    entry.cidr => entry
+  }
+
+  region = var.region
+
+  prefix_list_id = aws_ec2_managed_prefix_list.this.id
+
+  cidr        = each.key
+  description = each.value.description
 }
