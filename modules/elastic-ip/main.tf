@@ -74,3 +74,17 @@ resource "aws_eip" "this" {
     ]
   }
 }
+
+
+###################################################
+# Reverse Domain for Elastic IP
+###################################################
+
+resource "aws_eip_domain_name" "this" {
+  count = var.reverse_domain_name != null ? 1 : 0
+
+  region = var.region
+
+  allocation_id = aws_eip.this.allocation_id
+  domain_name   = var.reverse_domain_name
+}

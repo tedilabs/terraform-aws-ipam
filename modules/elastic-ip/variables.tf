@@ -59,6 +59,21 @@ variable "pool" {
   }
 }
 
+variable "reverse_domain_name" {
+  description = "(Optional) The reverse DNS domain name for the Elastic IP address."
+  type        = string
+  default     = null
+  nullable    = true
+
+  validation {
+    condition = anytrue([
+      var.reverse_domain_name == null,
+      var.reverse_domain_name != null && (length(var.reverse_domain_name) >= 0 && length(var.reverse_domain_name) <= 255),
+    ])
+    error_message = "Value for `reverse_domain_name` must be between 0 and 255 characters."
+  }
+}
+
 variable "timeouts" {
   description = "(Optional) How long to wait for the elastic ip to read/update/delete."
   type = object({

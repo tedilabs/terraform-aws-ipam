@@ -65,6 +65,11 @@ output "public_ip" {
   value       = aws_eip.this.public_ip
 }
 
+output "reverse_domain_name" {
+  description = "The reverse DNS domain name for the Elastic IP address."
+  value       = one(aws_eip_domain_name.this[*].domain_name)
+}
+
 output "resource_group" {
   description = "The resource group created to manage resources in this module."
   value = merge(
