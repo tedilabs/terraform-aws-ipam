@@ -1,3 +1,8 @@
+output "region" {
+  description = "The AWS region this module resources resides in."
+  value       = aws_eip.this.region
+}
+
 output "id" {
   description = "The ID of the Elastic IP."
   value       = aws_eip.this.id
@@ -18,14 +23,41 @@ output "type" {
   value       = var.type
 }
 
-output "scope" {
-  description = "The scope of the Elastic IP address."
-  value       = upper(aws_eip.this.domain)
+output "pool" {
+  description = "The pool configuration of the Elastic IP address for `BYOIP`, `IPAM_POOL` or `OUTPOST` types."
+  value = {
+    id = (var.type == "BYOIP"
+      ? aws_eip.this.public_ipv4_pool
+      : (var.type == "IPAM_POOL"
+        ? aws_eip.this.ipam_pool_id
+        : (var.type == "OUTPOST"
+          ? aws_eip.this.customer_owned_ipv4_pool
+          : null
+        )
+      )
+    )
+    address = aws_eip.this.address
+  }
 }
 
 output "network_border_group" {
   description = "The name of the network border group."
   value       = aws_eip.this.network_border_group
+}
+
+output "private_domain" {
+  description = "The private domain associated with the Elastic IP address."
+  value       = aws_eip.this.private_dns
+}
+
+output "private_ip" {
+  description = "The Private IP address."
+  value       = aws_eip.this.private_ip
+}
+
+output "public_domain" {
+  description = "The public domain associated with the Elastic IP address."
+  value       = aws_eip.this.public_dns
 }
 
 output "public_ip" {

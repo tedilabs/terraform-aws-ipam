@@ -19,25 +19,36 @@ locals {
 # Elastic IP
 ###################################################
 
-# TODO: customer_owned_ipv4_pool
 # INFO: Not supported attributes
 # - `associate_with_private_ip`
 # - `instance`
 # - `network_interface`
-# - `vpc`
 resource "aws_eip" "this" {
+  region = var.region
+
   domain = "vpc"
 
   network_border_group = (var.type == "AMAZON"
     ? var.network_border_group
     : null
   )
-  public_ipv4_pool = (var.type == "IPAM_POOL"
-    ? var.ipam_pool.id
-    : "amazon"
+  public_ipv4_pool = (var.type == "BYOIP"
+    ? var.pool.id
+    : (var.type == "AMAZON"
+      ? "amazon"
+      : null
+    )
   )
-  address = (var.type == "IPAM_POOL"
-    ? var.ipam_pool.address
+  ipam_pool_id = (var.type == "IPAM_POOL"
+    ? var.pool.id
+    : null
+  )
+  customer_owned_ipv4_pool = (var.type == "OUTPOST"
+    ? var.pool.id
+    : null
+  )
+  address = (var.type != "AMAZON"
+    ? var.pool.address
     : null
   )
 

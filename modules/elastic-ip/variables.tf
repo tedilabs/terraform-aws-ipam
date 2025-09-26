@@ -1,3 +1,10 @@
+variable "region" {
+  description = "(Optional) The region in which to create the module resources. If not provided, the module resources will be created in the provider's configured region."
+  type        = string
+  default     = null
+  nullable    = true
+}
+
 variable "name" {
   description = "(Required) The name of the Elastic IP."
   type        = string
@@ -6,15 +13,15 @@ variable "name" {
 
 variable "type" {
   description = <<EOF
-  (Optional) The type of the Elastic IP to decide how to allocate. Valid values are `AMAZON`, `IPAM_POOL` and `OUTPOST`. Defaults to `AMAZON`.
+  (Optional) The type of the Elastic IP to decide how to allocate. Valid values are `AMAZON`, `BYOIP`, `IPAM_POOL` and `OUTPOST`. Defaults to `AMAZON`.
   EOF
   type        = string
   default     = "AMAZON"
   nullable    = false
 
   validation {
-    condition     = contains(["AMAZON", "IPAM_POOL", "OUTPOST"], var.type)
-    error_message = "Valid values for `type` are `AMAZON`, `IPAM_POOL`, `OUTPOST`."
+    condition     = contains(["AMAZON", "BYOIP", "IPAM_POOL", "OUTPOST"], var.type)
+    error_message = "Valid values for `type` are `AMAZON`, `BYOIP`, `IPAM_POOL`, `OUTPOST`."
   }
 }
 
@@ -27,11 +34,14 @@ variable "network_border_group" {
   nullable    = true
 }
 
-variable "ipam_pool" {
+variable "pool" {
   description = <<EOF
-  (Optional) The configuration to allocate an Elastic IP address from the IPAM pool. Required if `type` is `IPAM_POOL`. `ipam_pool` as defined below.
-    (Required) `id` - The ID of an IPv4 IPAM public pool you want to use for allocating an Elastic IP address.
-    (Optional) `address` - The Elastic IP address to recover or an IPv4 address from an address pool.
+  (Optional) The configuration to allocate an Elastic IP address for `BYOIP`, `IPAM_POOL` or `OUTPOST` types. `pool` as defined below.
+    (Required) `id` - The ID of a pool you want to use for allocating an Elastic IP address.
+      `BYOIP` -  The ID of EC2 IPv4 address pool.
+      `IPAM_POOL` - The ID of an IPAM pool which has an Amazon-provided or BYOIP public IPv4 CIDR provisioned to it.
+      `OUTPOST` - The ID of a customer-owned address pool.
+    (Optional) `address` - The Elastic IP address from an address pool.
   EOF
   type = object({
     id      = string
@@ -39,6 +49,14 @@ variable "ipam_pool" {
   })
   default  = null
   nullable = true
+
+  validation {
+    condition = anytrue([
+      var.type == "AMAZON" && var.pool == null,
+      var.type != "AMAZON" && var.pool != null,
+    ])
+    error_message = "The `pool` must be provided when `type` is `BYOIP`, `IPAM_POOL` or `OUTPOST`, and must not be provided when `type` is `AMAZON`."
+  }
 }
 
 variable "timeouts" {
@@ -70,9 +88,6 @@ variable "module_tags_enabled" {
 ###################################################
 # Resource Group
 ###################################################
-
-
-
 
 variable "resource_group" {
   description = <<EOF
