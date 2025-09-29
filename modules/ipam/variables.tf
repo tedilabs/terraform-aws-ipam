@@ -1,3 +1,10 @@
+variable "region" {
+  description = "(Optional) The region in which to create the module resources. If not provided, the module resources will be created in the provider's configured region."
+  type        = string
+  default     = null
+  nullable    = true
+}
+
 variable "name" {
   description = "(Required) The name of the IPAM."
   type        = string
@@ -11,6 +18,37 @@ variable "description" {
   nullable    = false
 }
 
+variable "cascade_deletion_enabled" {
+  description = "(Optional) Whether to enable you to quickly delete an IPAM, private scopes, pools in private scopes, and any allocations in the pools in private scopes. Defaults to `true`."
+  type        = bool
+  default     = true
+  nullable    = false
+}
+
+variable "tier" {
+  description = "(Optional) The tier of the IPAM. Valid values are `FREE` and `ADVANCED`. Defaults to `FREE`."
+  type        = string
+  default     = "FREE"
+  nullable    = false
+
+  validation {
+    condition     = contains(["FREE", "ADVANCED"], var.tier)
+    error_message = "The tier must be either 'FREE' or 'ADVANCED'."
+  }
+}
+
+variable "metered_account" {
+  description = "(Optional) The AWS account that is charged for active IP addresses managed in IPAM. Valid values are `IPAM_OWNER` and `RESOURCE_OWNER`. Defaults to `ipam-owner`."
+  type        = string
+  default     = "IPAM_OWNER"
+  nullable    = false
+
+  validation {
+    condition     = contains(["IPAM_OWNER", "RESOURCE_OWNER"], var.metered_account)
+    error_message = "The metered_account must be either 'IPAM_OWNER' or 'RESOURCE_OWNER'."
+  }
+}
+
 variable "operating_regions" {
   description = <<EOF
   (Optional) A set of operating regions for the IPAM. Operating Regions are AWS Regions where the IPAM is allowed to manage IP address CIDRs. IPAM only discovers and monitors resources in the AWS Regions you select as operating Regions. The current region is required to include.
@@ -20,10 +58,10 @@ variable "operating_regions" {
   nullable    = false
 }
 
-variable "cascade_deletion_enabled" {
-  description = "(Optional) Whether to enable you to quickly delete an IPAM, private scopes, pools in private scopes, and any allocations in the pools in private scopes. Defaults to `true`."
+variable "private_gua_enabled" {
+  description = "(Optional) Whether to use your own private GUA address space as private IPv6 addresses. Defaults to `false`."
   type        = bool
-  default     = true
+  default     = false
   nullable    = false
 }
 
@@ -73,9 +111,6 @@ variable "module_tags_enabled" {
 ###################################################
 # Resource Group
 ###################################################
-
-
-
 
 variable "resource_group" {
   description = <<EOF

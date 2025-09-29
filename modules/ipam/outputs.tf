@@ -1,3 +1,8 @@
+output "region" {
+  description = "The AWS region this module resources resides in."
+  value       = aws_vpc_ipam.this.region
+}
+
 output "id" {
   description = "The ID of the IPAM."
   value       = aws_vpc_ipam.this.id
@@ -18,9 +23,30 @@ output "description" {
   value       = aws_vpc_ipam.this.description
 }
 
+output "tier" {
+  description = "The tier of the IPAM."
+  value = {
+    for k, v in local.tier :
+    v => k
+  }[aws_vpc_ipam.this.tier]
+}
+
+output "metered_account" {
+  description = "The AWS account that is charged for active IP addresses managed in IPAM."
+  value = {
+    for k, v in local.metered_account :
+    v => k
+  }[aws_vpc_ipam.this.metered_account]
+}
+
 output "operating_regions" {
   description = "A set of operating regions for the IPAM."
   value       = aws_vpc_ipam.this.operating_regions[*].region_name
+}
+
+output "private_gua_enabled" {
+  description = "Whether to use your own private GUA address space as private IPv6 addresses."
+  value       = aws_vpc_ipam.this.enable_private_gua
 }
 
 output "scope_count" {
@@ -58,7 +84,7 @@ output "additional_private_scopes" {
       arn         = scope.arn
       name        = name
       description = scope.description
-      type        = scope.ipam_scope_type
+      type        = scope.type
       is_default  = scope.is_default
       pool_count  = scope.pool_count
     }

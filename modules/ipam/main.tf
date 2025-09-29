@@ -14,14 +14,31 @@ locals {
   } : {}
 }
 
-data "aws_region" "this" {}
+data "aws_region" "this" {
+  region = var.region
+}
+
 data "aws_regions" "this" {
   all_regions = true
+
+  filter {
+    name   = "opt-in-status"
+    values = ["opt-in-not-required", "opted-in"]
+  }
 }
 
 locals {
-  region      = data.aws_region.this.name
+  region      = data.aws_region.this.region
   all_regions = data.aws_regions.this.names
+
+  tier = {
+    "FREE"     = "free"
+    "ADVANCED" = "advanced"
+  }
+  metered_account = {
+    "IPAM_OWNER"     = "ipam-owner"
+    "RESOURCE_OWNER" = "resource-owner"
+  }
 }
 
 
@@ -30,16 +47,24 @@ locals {
 ###################################################
 
 resource "aws_vpc_ipam" "this" {
+  region = local.region
+
   description = var.description
   cascade     = var.cascade_deletion_enabled
 
+  tier            = local.tier[var.tier]
+  metered_account = local.metered_account[var.metered_account]
+
   dynamic "operating_regions" {
     for_each = var.operating_regions
+    iterator = region
 
     content {
-      region_name = operating_regions.value
+      region_name = region.value
     }
   }
+
+  enable_private_gua = var.private_gua_enabled
 
   tags = merge(
     {
@@ -52,7 +77,7 @@ resource "aws_vpc_ipam" "this" {
   lifecycle {
     precondition {
       condition     = contains(var.operating_regions, local.region)
-      error_message = "The current region is required to include in `operating_regions`."
+      error_message = "The current region must be included in `operating_regions`."
     }
 
     precondition {
@@ -76,6 +101,8 @@ resource "aws_vpc_ipam_scope" "this" {
     scope.name => scope
   }
 
+  region = local.region
+
   ipam_id     = aws_vpc_ipam.this.id
   description = each.value.description
 
@@ -96,10 +123,15 @@ resource "aws_vpc_ipam_scope" "this" {
 resource "aws_vpc_ipam_resource_discovery_association" "this" {
   count = length(var.additional_resource_discovery_associations)
 
+  region = local.region
+
   ipam_id                    = aws_vpc_ipam.this.id
   ipam_resource_discovery_id = var.additional_resource_discovery_associations[count.index].resource_discovery
 
   tags = merge(
+    {
+      "Name" = var.additional_resource_discovery_associations[count.index].resource_discovery
+    },
     local.module_tags,
     var.additional_resource_discovery_associations[count.index].tags,
   )
