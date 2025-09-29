@@ -23,8 +23,6 @@ locals {
 # Prefix List
 ###################################################
 
-# INFO: Not support `aws_ec2_managed_prefix_list_entry`
-# To improved execution times on larger updates, if you plan to create a prefix list with more than 100 entries, it is recommended that you use the inline entry block as part of the Managed Prefix List resource resource instead.
 resource "aws_ec2_managed_prefix_list" "this" {
   region = var.region
 

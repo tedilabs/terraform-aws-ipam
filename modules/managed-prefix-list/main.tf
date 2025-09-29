@@ -24,7 +24,7 @@ data "aws_region" "this" {
 ###################################################
 
 data "aws_ec2_managed_prefix_list" "this" {
-  region = var.region
+  region = data.aws_region.this.region
 
   name = var.name
 }
@@ -38,7 +38,7 @@ resource "aws_ec2_tag" "this" {
     var.tags,
   )
 
-  region = var.region
+  region = data.aws_region.this.region
 
   resource_id = data.aws_ec2_managed_prefix_list.this.id
   key         = each.key
