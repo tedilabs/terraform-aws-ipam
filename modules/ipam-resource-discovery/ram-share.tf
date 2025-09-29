@@ -3,13 +3,15 @@
 ###################################################
 
 module "share" {
-  source  = "tedilabs/account/aws//modules/ram-share"
-  version = "~> 0.24.0"
+  source  = "tedilabs/organization/aws//modules/ram-share"
+  version = "~> 0.4.0"
 
   for_each = {
     for share in var.shares :
     share.name => share
   }
+
+  region = aws_vpc_ipam_resource_discovery.this.region
 
   name = "ipam.resource-discovery.${var.name}.${each.key}"
 
@@ -21,8 +23,10 @@ module "share" {
   external_principals_allowed = each.value.external_principals_allowed
   principals                  = each.value.principals
 
-  resource_group_enabled = false
-  module_tags_enabled    = false
+  resource_group = {
+    enabled = false
+  }
+  module_tags_enabled = false
 
   tags = merge(
     local.module_tags,

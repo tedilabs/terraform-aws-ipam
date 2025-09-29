@@ -14,13 +14,21 @@ locals {
   } : {}
 }
 
-data "aws_region" "this" {}
+data "aws_region" "this" {
+  region = var.region
+}
+
 data "aws_regions" "this" {
   all_regions = true
+
+  filter {
+    name   = "opt-in-status"
+    values = ["opt-in-not-required", "opted-in"]
+  }
 }
 
 locals {
-  region      = data.aws_region.this.name
+  region      = data.aws_region.this.region
   all_regions = data.aws_regions.this.names
 }
 
@@ -30,13 +38,16 @@ locals {
 ###################################################
 
 resource "aws_vpc_ipam_resource_discovery" "this" {
+  region = local.region
+
   description = var.description
 
   dynamic "operating_regions" {
     for_each = var.operating_regions
+    iterator = region
 
     content {
-      region_name = operating_regions.value
+      region_name = region.value
     }
   }
 
@@ -50,7 +61,7 @@ resource "aws_vpc_ipam_resource_discovery" "this" {
 
   lifecycle {
     precondition {
-      condition     = contains(var.operating_regions, local.region)
+      condition     = contains(var.operating_regions, var.region)
       error_message = "The current region is required to include in `operating_regions`."
     }
 

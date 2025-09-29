@@ -1,3 +1,8 @@
+output "region" {
+  description = "The AWS region this module resources resides in."
+  value       = aws_vpc_ipam_resource_discovery.this.region
+}
+
 output "id" {
   description = "The ID of the IPAM resource discovery."
   value       = aws_vpc_ipam_resource_discovery.this.id
@@ -13,7 +18,7 @@ output "owner_id" {
   value       = aws_vpc_ipam_resource_discovery.this.owner_id
 }
 
-output "region" {
+output "home_region" {
   description = "The home region of the Resource Discovery."
   value       = aws_vpc_ipam_resource_discovery.this.ipam_resource_discovery_region
 }
