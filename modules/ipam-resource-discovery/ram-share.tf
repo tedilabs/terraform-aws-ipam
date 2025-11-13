@@ -1,10 +1,19 @@
+locals {
+  ram_share_name_prefix = join(".", [
+    "ipam",
+    "resource-discovery",
+    replace(var.name, "/[^a-zA-Z0-9_\\.-]/", "-"),
+  ])
+}
+
+
 ###################################################
 # Resource Sharing by RAM (Resource Access Manager)
 ###################################################
 
 module "share" {
   source  = "tedilabs/organization/aws//modules/ram-share"
-  version = "~> 0.4.0"
+  version = "~> 0.5.0"
 
   for_each = {
     for share in var.shares :
@@ -13,11 +22,11 @@ module "share" {
 
   region = aws_vpc_ipam_resource_discovery.this.region
 
-  name = "ipam.resource-discovery.${var.name}.${each.key}"
+  name = "${local.ram_share_name_prefix}.${each.key}"
 
-  resources = [
-    aws_vpc_ipam_resource_discovery.this.arn
-  ]
+  resources = {
+    (var.name) = aws_vpc_ipam_resource_discovery.this.arn
+  }
   permissions = each.value.permissions
 
   external_principals_allowed = each.value.external_principals_allowed
