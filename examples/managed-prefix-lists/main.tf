@@ -27,7 +27,7 @@ locals {
 module "managed_prefix_list" {
   source = "../../modules/managed-prefix-list"
   # source  = "tedilabs/ipam/aws//modules/managed-prefix-list"
-  # version = "~> 0.1.0"
+  # version = "~> 0.4.0"
 
   for_each = toset(local.managed_prefix_lists)
 

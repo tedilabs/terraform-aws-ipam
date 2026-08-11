@@ -10,7 +10,7 @@ provider "aws" {
 module "eip" {
   source = "../../modules/elastic-ip"
   # source  = "tedilabs/ipam/aws//modules/elastic-ip"
-  # version = "~> 0.2.0"
+  # version = "~> 0.4.0"
 
   name = "test-amazon"
   type = "AMAZON"
