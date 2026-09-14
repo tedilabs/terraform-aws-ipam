@@ -9,34 +9,34 @@ This module creates following resources.
 ## Requirements
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.12 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 6.12 |
 
 ## Providers
 
 | Name | Version |
-|------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 6.20.0 |
+| ---- | ------- |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 6.12 |
 
 ## Modules
 
 | Name | Source | Version |
-|------|--------|---------|
+| ---- | ------ | ------- |
 | <a name="module_resource_group"></a> [resource\_group](#module\_resource\_group) | tedilabs/misc/aws//modules/resource-group | ~> 0.12.0 |
-| <a name="module_share"></a> [share](#module\_share) | tedilabs/organization/aws//modules/ram-share | ~> 0.5.0 |
+| <a name="module_share"></a> [share](#module\_share) | tedilabs/organization/aws//modules/ram-share | ~> 0.8.1 |
 
 ## Resources
 
 | Name | Type |
-|------|------|
+| ---- | ---- |
 | [aws_ec2_managed_prefix_list.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ec2_managed_prefix_list) | resource |
 | [aws_ec2_managed_prefix_list_entry.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ec2_managed_prefix_list_entry) | resource |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
+| ---- | ----------- | ---- | ------- | :------: |
 | <a name="input_address_family"></a> [address\_family](#input\_address\_family) | (Required) Address family of this prefix list. Valid values are `IPv4` or `IPv6`. | `string` | n/a | yes |
 | <a name="input_name"></a> [name](#input\_name) | (Required) The name of the prefix list. The name must not start with `com.amazonaws`. | `string` | n/a | yes |
 | <a name="input_entries"></a> [entries](#input\_entries) | (Optional) A set of prefix list entries. Each block of `entries` as defined below.<br/>    (Required) `cidr` - The CIDR block of this entry.<br/>    (Optional) `description` - The description of this entry. Due to API limitations, updating only the description of an existing entry requires temporarily removing and re-adding the entry. | <pre>set(object({<br/>    cidr        = string<br/>    description = optional(string, "Managed by Terraform.")<br/>  }))</pre> | `[]` | no |
@@ -51,7 +51,7 @@ This module creates following resources.
 ## Outputs
 
 | Name | Description |
-|------|-------------|
+| ---- | ----------- |
 | <a name="output_address_family"></a> [address\_family](#output\_address\_family) | The address family of the prefix list. |
 | <a name="output_arn"></a> [arn](#output\_arn) | The ARN of the prefix list. |
 | <a name="output_entries"></a> [entries](#output\_entries) | A set of prefix list entries. |
