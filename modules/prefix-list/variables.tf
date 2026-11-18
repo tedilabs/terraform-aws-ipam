@@ -11,7 +11,7 @@ variable "name" {
   nullable    = false
 
   validation {
-    condition     = !startswith("com.amazonaws", var.name)
+    condition     = !startswith(var.name, "com.amazonaws")
     error_message = "The name must not start with `com.amazonaws`."
   }
 }
