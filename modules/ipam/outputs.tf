@@ -84,7 +84,7 @@ output "additional_private_scopes" {
       arn         = scope.arn
       name        = name
       description = scope.description
-      type        = scope.type
+      type        = scope.ipam_scope_type
       is_default  = scope.is_default
       pool_count  = scope.pool_count
     }
