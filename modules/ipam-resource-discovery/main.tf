@@ -61,7 +61,7 @@ resource "aws_vpc_ipam_resource_discovery" "this" {
 
   lifecycle {
     precondition {
-      condition     = contains(var.operating_regions, var.region)
+      condition     = contains(var.operating_regions, local.region)
       error_message = "The current region is required to include in `operating_regions`."
     }
 
