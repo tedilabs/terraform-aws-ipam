@@ -32,6 +32,15 @@ variable "max_entries" {
   type        = number
   default     = null
   nullable    = true
+
+  validation {
+    condition     = var.max_entries == null || var.max_entries >= 1
+    error_message = "`max_entries` must be at least 1."
+  }
+  validation {
+    condition     = var.max_entries != null || length(var.entries) > 0
+    error_message = "`max_entries` is required when `entries` is empty."
+  }
 }
 
 variable "exclusive_entry_management_enabled" {
