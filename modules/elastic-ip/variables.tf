@@ -68,7 +68,7 @@ variable "reverse_domain_name" {
   validation {
     condition = anytrue([
       var.reverse_domain_name == null,
-      var.reverse_domain_name != null && (length(var.reverse_domain_name) >= 0 && length(var.reverse_domain_name) <= 255),
+      var.reverse_domain_name != null && length(var.reverse_domain_name) <= 255,
     ])
     error_message = "Value for `reverse_domain_name` must be between 0 and 255 characters."
   }
