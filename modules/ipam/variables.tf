@@ -38,7 +38,7 @@ variable "tier" {
 }
 
 variable "metered_account" {
-  description = "(Optional) The AWS account that is charged for active IP addresses managed in IPAM. Valid values are `IPAM_OWNER` and `RESOURCE_OWNER`. Defaults to `ipam-owner`."
+  description = "(Optional) The AWS account that is charged for active IP addresses managed in IPAM. Valid values are `IPAM_OWNER` and `RESOURCE_OWNER`. Defaults to `IPAM_OWNER`."
   type        = string
   default     = "IPAM_OWNER"
   nullable    = false
@@ -67,7 +67,7 @@ variable "private_gua_enabled" {
 
 variable "additional_private_scopes" {
   description = <<EOF
-  (Optional) A list of additional scopes to create and manage by the IPAM. A scope is the highest-level container within IPAM. When you create an IPAM, IPAM creates two default scopes for you. Each scope represents the IP space for a single network. Each block of `additional_scopes` as defined below.
+  (Optional) A list of additional scopes to create and manage by the IPAM. A scope is the highest-level container within IPAM. When you create an IPAM, IPAM creates two default scopes for you. Each scope represents the IP space for a single network. Each block of `additional_private_scopes` as defined below.
     (Required) `name` - A name of the scope in the IPAM.
     (Optional) `description` - A description of the scope in the IPAM.
   EOF
